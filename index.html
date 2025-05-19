@@ -63,14 +63,14 @@
         if (!response.ok) throw new Error('Failed to load logos.json');
         const images = await response.json();
 
-        // Define the six priority logos
+        // Define the six priority logos (updated filenames)
         const priorityLogos = [
-          "images/company-logos/Company=Mailchimp.png",
-          "images/company-logos/Company=Slack.png",
-          "images/company-logos/Company=PayPal.png",
-          "images/company-logos/Company=Shopify.png",
-          "images/company-logos/Company=Netflix.png",
-          "images/company-logos/Company=Upwork.png"
+          "images/company-logos/company-mailchimp.png",
+          "images/company-logos/company-slack.png",
+          "images/company-logos/company-paypal.png",
+          "images/company-logos/company-shopify.png",
+          "images/company-logos/company-netflix.png",
+          "images/company-logos/company-upwork.png"
         ];
 
         // Filter out the priority logos from the fetched list
@@ -80,14 +80,14 @@
         return [...priorityLogos, ...otherImages];
       } catch (e) {
         console.error('Error loading sponsor images:', e);
-        // Fallback array with priority logos
+        // Fallback array with priority logos (updated filenames)
         return [
-          "images/company-logos/Company=Mailchimp.png",
-          "images/company-logos/Company=Slack.png",
-          "images/company-logos/Company=PayPal.png",
-          "images/company-logos/Company=Shopify.png",
-          "images/company-logos/Company=Netflix.png",
-          "images/company-logos/Company=Upwork.png"
+          "images/company-logos/company-mailchimp.png",
+          "images/company-logos/company-slack.png",
+          "images/company-logos/company-paypal.png",
+          "images/company-logos/company-shopify.png",
+          "images/company-logos/company-netflix.png",
+          "images/company-logos/company-upwork.png"
         ];
       }
     }
