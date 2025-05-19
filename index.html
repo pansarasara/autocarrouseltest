@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Auto Sliding Carousel</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f5f5f5;
+      margin: 0;
+      padding: 0;
+    }
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 20px;
+    }
+    h1 {
+      text-align: center;
+      font-size: 2rem;
+      margin-bottom: 20px;
+    }
+    #carousel {
+      margin: 0 auto;
+      width: 100%;
+      max-width: 1000px;
+      height: 200px;
+    }
+    .carousel-item img {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+    }
+    .instructions {
+      text-align: center;
+      margin-top: 20px;
+      color: #666;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>Auto Sliding Carousel</h1>
+    <p style="text-align: center;">Showing 6 sponsor logos at once with auto-slide and drag functionality</p>
+    <div id="carousel"></div>
+
+    <div class="instructions">
+      <p><strong>Instructions:</strong></p>
+      <p>The carousel automatically slides to the right</p>
+      <p>You can drag it left or right manually</p>
+      <p>The faster you drag, the more it will scroll</p>
+      <p>The carousel responds to screen size, showing fewer items on mobile</p>
+    </div>
+  </div>
+
+  <script src="AutoSlideCarousel.js"></script>
+  <script>
+    // Function to fetch and prioritize sponsor images
+    async function loadSponsorImages() {
+      try {
+        const response = await fetch('logos.json');
+        if (!response.ok) throw new Error('Failed to load logos.json');
+        const images = await response.json();
+
+        // Define the six priority logos
+        const priorityLogos = [
+          "images/company-logos/Company=Mailchimp.png",
+          "images/company-logos/Company=Slack.png",
+          "images/company-logos/Company=PayPal.png",
+          "images/company-logos/Company=Shopify.png",
+          "images/company-logos/Company=Netflix.png",
+          "images/company-logos/Company=Upwork.png"
+        ];
+
+        // Filter out the priority logos from the fetched list
+        const otherImages = images.filter(img => !priorityLogos.includes(img));
+        
+        // Combine: priority logos first, then the rest
+        return [...priorityLogos, ...otherImages];
+      } catch (e) {
+        console.error('Error loading sponsor images:', e);
+        // Fallback array with priority logos
+        return [
+          "images/company-logos/Company=Mailchimp.png",
+          "images/company-logos/Company=Slack.png",
+          "images/company-logos/Company=PayPal.png",
+          "images/company-logos/Company=Shopify.png",
+          "images/company-logos/Company=Netflix.png",
+          "images/company-logos/Company=Upwork.png"
+        ];
+      }
+    }
+
+    // Initialize carousel automatically
+    (async () => {
+      const images = await loadSponsorImages();
+      const carousel = new AutoSlideCarousel("#carousel", {
+        items: images,
+        itemsToShow: 6,
+        autoplaySpeed: 3000,
+        transitionSpeed: 500,
+        gap: 16,
+      });
+    })();
+  </script>
+</body>
+</html>
